@@ -1,0 +1,30 @@
+{
+  "name" : "rest-api",
+  "version" : "0.0.1",
+  "port" : 8081,
+  "serverIp": "http://example.com",
+  "mongoConnection" : {
+    "uri": "mongodb://localhost:27017/users",
+    "options": {
+      "user": "user",
+      "pass": "password",
+      "server": {
+        "poolSize": 5,
+        "reconnectTries": 1000,
+        "reconnectInterval": 1000
+      }
+    }
+  },
+  "imageQuotes": {
+    "imageDirectory": "/images/",
+    "imagePath": "./images/",
+    "limits": {
+      "fields": 2,
+      "fileSize": 250000,
+      "files": 1
+    },
+    "acceptedMimeTypes": ["image/gif", "image/jpeg", "image/pjpeg", "image/png", "image/svg+xml"],
+    "defaultImage": "default.jpg"
+  }
+
+}
