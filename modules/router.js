@@ -380,7 +380,7 @@ class Router {
 
 
     sendSuccessResponse (res, code, data) {
-        this.log.info(`send success response: ${data}`);
+        this.log.info(`send success response: ${JSON.stringify(data)}`);
         res.statusCode = code;
         res.setHeader('Content-Type', 'application/json');
         res.status(code).json(data);
@@ -388,7 +388,7 @@ class Router {
     }
 
     sendErrorResponse (res, code, data, message) {
-        this.log.info(`send error response: ${data}`);
+        this.log.info(`send error response: ${JSON.stringify(data)}`);
         message = message || getMessageByHTTPCode(code);
         res.statusCode = code;
         res.statusMessage = message;
