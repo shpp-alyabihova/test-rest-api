@@ -69,5 +69,5 @@ app.delete ('/api/item/:id/image', function(req, res) {
 });
 
 app.listen(port, function () {
-    log.info('Running on http://localhost:' + port);
+    log.info(`Running on ${config.serverIp}:${port}`);
 });
