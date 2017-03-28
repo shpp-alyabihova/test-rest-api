@@ -81,24 +81,25 @@ class Router {
                     this.sendSuccessResponse(res, 200, { token: updatedUser.Authorization });
                 })
                 .catch((err)=> {
+                    let errMessage = err && err.message;
                     let err_data = {};
                     let field = '';
                     let code = 422;
-                    if (err == "Wrong password") {
+                    if (errMessage == "Wrong password") {
                         field = 'password';
-                    } else if (err == "Wrong email"){
+                    } else if (errMessage == "Wrong email"){
                         field = 'email';
                     }
                     if (field) {
                         err_data.field = (field) ? field : 'error';
-                        err_data.message = err;
+                        err_data.message = errMessage;
                         res_data.push(err_data);
                     } else {
                         code = 500;
                         res_data = {};
                     }
                     this.sendErrorResponse(res, code, res_data);
-                    this.log.error(err);
+                    this.log.error(errMessage);
                 })
         }
     }
@@ -113,9 +114,10 @@ class Router {
 
             })
             .catch((err)=> {
-                let code = (err == 'Unauthorized') ? 401 : 500;
+                let errMessage = err && err.message;
+                let code = (errMessage == 'Unauthorized') ? 401 : 500;
                 this.sendErrorResponse(res, code, {});
-                this.log.error(err);
+                this.log.error(errMessage);
             })
     }
 
@@ -147,6 +149,7 @@ class Router {
                     this.sendSuccessResponse(res, 200, res_data);
                 })
                 .catch((err)=> {
+                    let errMessage = err && err.message;
                     let code = 422;
                     if (~err.indexOf('email')) {
                         let err_data = {};
@@ -154,11 +157,11 @@ class Router {
                         err_data.field = `email`;
                         res_data.push(err_data);
                     } else {
-                        code = (err == "Unauthorized") ? 401 : 500;
+                        code = (errMessage == "Unauthorized") ? 401 : 500;
                         res_data = {};
                     }
                     this.sendErrorResponse(res, code, res_data);
-                    this.log.error(err);
+                    this.log.error(errMessage);
                 })
         }
     }
@@ -172,9 +175,10 @@ class Router {
                 this.sendSuccessResponse(res, 200, res_data);
             })
             .catch((err)=> {
-                let code = (err == 'Unauthorized') ? 401 : 404;
+                let errMessage = err && err.message;
+                let code = (errMessage == 'Unauthorized') ? 401 : 404;
                 this.sendErrorResponse(res, code, {});
-                this.log.error(err);
+                this.log.error(errMessage);
             })
     }
 
@@ -188,8 +192,9 @@ class Router {
                 this.sendSuccessResponse(res, 200, res_data);
             })
             .catch((err)=> {
+                let errMessage = err && err.message;
                 this.sendErrorResponse(res, 500, {});
-                this.log.error(err);
+                this.log.error(errMessage);
             })
     }
 
@@ -224,9 +229,10 @@ class Router {
                         this.sendSuccessResponse(res, 200, res_data);
                 })
                 .catch((err)=> {
+                    let errMessage = err && err.message;
                     let code = ("Unauthorized") ? 401 : 500;
                     this.sendErrorResponse(res, code, {});
-                    this.log.error(err);
+                    this.log.error(errMessage);
                 })
         }
     }
@@ -239,9 +245,10 @@ class Router {
                 this.sendSuccessResponse(res, 200, res_data);
             })
             .catch((err)=> {
-                let code = (err == "Not found") ? 404 : 500;
+                let errMessage = err && err.message;
+                let code = (errMessage == "Not found") ? 404 : 500;
                 this.sendErrorResponse(res, code, {});
-                this.log.error(err);
+                this.log.error(errMessage);
             })
     }
 
@@ -271,9 +278,10 @@ class Router {
                     this.sendSuccessResponse(res, 200, res_data);
                 })
                 .catch((err)=> {
-                    let code = (err == "Unauthorized") ? 401 : (err == "Not found") ? 404 : 500;
+                    let errMessage = err && err.message;
+                    let code = (errMessage == "Unauthorized") ? 401 : (errMessage == "Not found") ? 404 : 500;
                     this.sendErrorResponse(res, code, {});
-                    this.log.error(err);
+                    this.log.error(errMessage);
                 })
 
         }
@@ -290,9 +298,10 @@ class Router {
                 this.sendSuccessResponse(res, 200, {});
             })
             .catch((err)=> {
-                let code = (err == "Unauthorized") ? 401 : 404;
+                let errMessage = err && err.message;
+                let code = (errMessage == "Unauthorized") ? 401 : 404;
                 this.sendErrorResponse(res, code, {});
-                this.log.error(err);
+                this.log.error(errMessage);
             })
     }
 
@@ -310,8 +319,9 @@ class Router {
                 this.sendSuccessResponse(res, 200, res_data);
             })
             .catch((err)=> {
+                let errMessage = err && err.message;
                 this.sendErrorResponse(res, 500, {});
-                this.log.error(err);
+                this.log.error(errMessage);
             });
 
     }
@@ -341,10 +351,11 @@ class Router {
                     this.sendSuccessResponse(res, 200, res_data);
                 })
                 .catch((err)=> {
+                    let errMessage = err && err.message;
                     let res_data = (err.code == 422) ? err_data : {};
-                    let code = (err.code == 422) ? 422 : (err == "Unauthorized") ? 401 : (err == "Not found") ? 404 : 500;
+                    let code = (err.code == 422) ? 422 : (errMessage == "Unauthorized") ? 401 : (errMessage == "Not found") ? 404 : 500;
                     this.sendErrorResponse(res, code, res_data);
-                    this.log.error(err);
+                    this.log.error(errMessage);
                 });
         }
     }
@@ -371,9 +382,10 @@ class Router {
                 this.sendSuccessResponse(res, 200, {});
             })
             .catch((err)=> {
-                let code = (err == "Unauthorized") ? 401 : (err == "Not found") ? 404 : 500;
+                let errMessage = err && err.message;
+                let code = (errMessage == "Unauthorized") ? 401 : (errMessage == "Not found") ? 404 : 500;
                 this.sendErrorResponse(res, code, {});
-                this.log.error(err);
+                this.log.error(errMessage);
             });
 
     }
